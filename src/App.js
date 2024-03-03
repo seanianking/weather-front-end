@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import WeatherQueryForm from './Components/WeatherQueryForm';
+import WeatherDisplaySection from './Components/WeatherDisplaySection';
+import axios from 'axios';
 
-function App() {
+const App = () => {
+  const [weatherData, setWeatherData] = useState(null);
+
+  const searchWeather = async (location) => {
+    try {
+      // Add Nominatim API call to get latitude and longitude
+
+      // Add National Weather Service API call with obtained coordinates
+
+      // Update state with weather data
+
+      setWeatherData({
+        temperature: 75,
+        description: 'Sunny',
+        windSpeed: 10,
+        detailedForecast: 'Clear sky with no precipitation.',
+      });
+    } catch (error) {
+      console.error('Error fetching weather data:', error.message);
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Weather App</h1>
+      <WeatherQueryForm onSearch={searchWeather} />
+      <WeatherDisplaySection weatherData={weatherData} />
     </div>
   );
-}
+};
 
 export default App;
