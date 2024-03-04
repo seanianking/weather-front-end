@@ -71,7 +71,7 @@ const App = () => {
   }, [lat, lon])
   return (
     <StyledContainer>
-      <Typography variant="h2">Weather App</Typography>
+      <AppHeader variant="h2">Weather App</AppHeader>
       <WeatherQueryForm onSearch={getGeolocation} setSearchTerm={setSearchTerm} />
       {errorText && <ErrorMessage variant='h4'>{errorText}</ErrorMessage>}
       <WeatherDisplaySection weatherData={weatherData} searchTerm={searchTerm} />
@@ -87,9 +87,14 @@ const StyledContainer = styled(Container)`
   align-items: center;
   justify-content: center;
   margin-top: 150px;
+  wrap: wrap;
 `
 
 const ErrorMessage = styled(Typography)`
 color: red;
 margin: 30px 0 !important;
+`
+
+const AppHeader = styled(Typography)`
+text-align: center;
 `

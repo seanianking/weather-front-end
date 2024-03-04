@@ -34,18 +34,22 @@ display: flex;
 align-items: center;
 justify-content: space-between;
 width: 84%;
-margin-top: 20px`
+margin-top: 20px;
+flex-wrap: wrap;
+`
 
 const StyledTextField = styled(TextField)`
 width:80% !important;
 background-color: #6082b6 !important;
 border: 3px solid #293c59 !important;
 border-radius: 10px !important;
+margin: 0 auto !important;
 `
 
 const StyledButton = styled(Button)`
 background-color: #6082b6 !important;
-border: 1px solid #293c59 !important;
+border: 3px solid #293c59 !important;
 border-radius: 10px !important;
 color:black !important;
+margin: 10px auto !important;
 `

@@ -21,7 +21,7 @@ const WeatherDisplaySection = ({ weatherData, searchTerm }) => {
 export default WeatherDisplaySection;
 
 const StyledBox = styled(Box)`
-margin-top:50px;
+  margin:50px 0;
   display: flex;
   flex-direction: column;
   background-color: #6082b6;
@@ -30,7 +30,6 @@ margin-top:50px;
   padding: 20px;
   align-items: center;
   justify-content: space-between;
-  // height: ;
   max-width: 80%;
   `
 const WeatherText = styled(Typography)`
