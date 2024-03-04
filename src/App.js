@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import WeatherQueryForm from './Components/WeatherQueryForm';
 import WeatherDisplaySection from './Components/WeatherDisplaySection';
 import axios from 'axios';
+import { Container, Typography } from '@mui/material';
+import styled from 'styled-components';
 
 
 const App = () => {
@@ -9,6 +11,7 @@ const App = () => {
   const [lat, setLat] = useState(null);
   const [lon, setLon] = useState(null);
   const [errorText, setErrorText] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
 
   const getGeolocation = async (location) => {
 
@@ -67,13 +70,27 @@ const App = () => {
     }
   }, [lat, lon])
   return (
-    <div>
+    <StyledContainer>
       <h1>Weather App</h1>
-      <WeatherQueryForm onSearch={getGeolocation} />
-      {errorText && <p>{errorText}</p>}
-      <WeatherDisplaySection weatherData={weatherData} />
-    </div>
+      <WeatherQueryForm onSearch={getGeolocation} setSearchTerm={setSearchTerm} />
+      {errorText && <ErrorMessage variant='h5'>{errorText}</ErrorMessage>}
+      <WeatherDisplaySection weatherData={weatherData} searchTerm={searchTerm} />
+    </StyledContainer>
   );
 };
 
 export default App;
+
+const StyledContainer = styled(Container)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  margin-top: 150px;
+`
+
+const ErrorMessage = styled(Typography)`
+color: red;
+margin: 20px 0;
+`
