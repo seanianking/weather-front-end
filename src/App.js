@@ -8,6 +8,7 @@ const App = () => {
   const [weatherData, setWeatherData] = useState(null);
   const [lat, setLat] = useState(null);
   const [lon, setLon] = useState(null);
+  const [errorText, setErrorText] = useState(null);
 
   const getGeolocation = async (location) => {
 
@@ -19,44 +20,57 @@ const App = () => {
       const { lat, lon } = locationResponse.data[0];
       setLat(lat);
       setLon(lon);
+      setErrorText('')
     }
     else {
-      console.log('Invalid location');
+      setErrorText('Invalid location! Please try again.');
+      setWeatherData("")
     }
-
-    // console.log(lat, lon)
   };
 
 
 
   const getWeatherData = async (lat, lon) => {
     //collect temp, condition, wind speed, and forecast description
-    const weatherResponse = await axios.get(`https://api.weather.gov/points/${lat},${lon}`)
-      .then((data) => {
-        const forecastUrl = data.data.properties.forecast
-        // console.log(forecastUrl)
-        axios.get(forecastUrl).then((res) => {
-          console.log(res.data.properties.periods[0])
-          const { detailedForecast, temperature, shortForecast, windSpeed } = res.data.properties.periods[0]
-          setWeatherData({
-            temperature,
-            description: shortForecast,
-            windSpeed,
-            detailedForecast
+
+    try {
+      await axios.get(`https://api.weather.gov/points/${lat},${lon}`)
+        .then((data) => {
+          const forecastUrl = data.data.properties.forecast
+
+          axios.get(forecastUrl).then((res) => {
+
+            const { detailedForecast, temperature, shortForecast, windSpeed } = res.data.properties.periods[0]
+            setWeatherData({
+              temperature,
+              description: shortForecast,
+              windSpeed,
+              detailedForecast
+            })
           })
         })
-      })
+      setErrorText('')
+
+    }
+    catch (err) {
+
+      setWeatherData("")
+      setErrorText('Invalid location! Please try again.');
+    }
     // console.log(weatherResponse.data.properties);
     //temperature, description, windSpeed, detailedForecast
   }
   useEffect(() => {
     // getGeolocation("Salt Lake City")
-    getWeatherData("40.7596198", "-111.886797")
-  }, [])
+    if (lat && lon) {
+      getWeatherData(lat, lon)
+    }
+  }, [lat, lon])
   return (
     <div>
       <h1>Weather App</h1>
       <WeatherQueryForm onSearch={getGeolocation} />
+      {errorText && <p>{errorText}</p>}
       <WeatherDisplaySection weatherData={weatherData} />
     </div>
   );
