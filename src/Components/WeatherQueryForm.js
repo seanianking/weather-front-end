@@ -12,7 +12,7 @@ const WeatherQueryForm = ({ onSearch, setSearchTerm }) => {
     };
 
     return (
-        <StyledContainer
+        <StyledBox
             component="form"
         >
             <StyledTextField
@@ -22,29 +22,30 @@ const WeatherQueryForm = ({ onSearch, setSearchTerm }) => {
                 onChange={(e) => setLocation(e.target.value)}
                 placeholder="Enter location..."
             />
-            <StyledButton variant='contained' onClick={handleSearch}>Search</StyledButton>
-        </StyledContainer>
+            <StyledButton variant='contained' size='large' onClick={handleSearch}>Search</StyledButton>
+        </StyledBox>
     );
 };
 
 export default WeatherQueryForm;
 
-const StyledContainer = styled(Box)`
+const StyledBox = styled(Box)`
 display: flex;
 align-items: center;
 justify-content: space-between;
-width: 75%;
-`
+width: 84%;
+margin-top: 20px`
+
 const StyledTextField = styled(TextField)`
-width:80%;
-background-color: #6082b6;
-border: 3px solid #293c59;
-border-radius: 10px;
+width:80% !important;
+background-color: #6082b6 !important;
+border: 3px solid #293c59 !important;
+border-radius: 10px !important;
 `
 
 const StyledButton = styled(Button)`
-background-color: #6082b6;
-border: 1px solid #293c59;
-border-radius: 10px;
-color:black;
+background-color: #6082b6 !important;
+border: 1px solid #293c59 !important;
+border-radius: 10px !important;
+color:black !important;
 `

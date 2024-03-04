@@ -8,8 +8,8 @@ import styled from 'styled-components';
 
 const App = () => {
   const [weatherData, setWeatherData] = useState(null);
-  const [lat, setLat] = useState(null);
-  const [lon, setLon] = useState(null);
+  const [lat, setLat] = useState("");
+  const [lon, setLon] = useState("");
   const [errorText, setErrorText] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -71,9 +71,9 @@ const App = () => {
   }, [lat, lon])
   return (
     <StyledContainer>
-      <h1>Weather App</h1>
+      <Typography variant="h2">Weather App</Typography>
       <WeatherQueryForm onSearch={getGeolocation} setSearchTerm={setSearchTerm} />
-      {errorText && <ErrorMessage variant='h5'>{errorText}</ErrorMessage>}
+      {errorText && <ErrorMessage variant='h4'>{errorText}</ErrorMessage>}
       <WeatherDisplaySection weatherData={weatherData} searchTerm={searchTerm} />
     </StyledContainer>
   );
@@ -82,15 +82,14 @@ const App = () => {
 export default App;
 
 const StyledContainer = styled(Container)`
-  display: flex;
+  display: flex !important;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 80%;
   margin-top: 150px;
 `
 
 const ErrorMessage = styled(Typography)`
 color: red;
-margin: 20px 0;
+margin: 30px 0 !important;
 `
