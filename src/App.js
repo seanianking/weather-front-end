@@ -10,25 +10,49 @@ const App = () => {
   const [lon, setLon] = useState(null);
 
   const getGeolocation = async (location) => {
-    try {
-      const response = await axios.get(
-        `https://nominatim.openstreetmap.org/search?format=json&q=${location}&limit=1`
-      );
-      console.log(response.data[0]);
-      const { lat, lon } = response.data[0];
+
+    const locationResponse = await axios.get(
+      `https://nominatim.openstreetmap.org/search?format=json&q=${location}&limit=1`
+    );
+    if (locationResponse.data[0]) {
+      // console.log(locationResponse.data[0]);
+      const { lat, lon } = locationResponse.data[0];
       setLat(lat);
       setLon(lon);
-    } catch (error) {
-      console.error('Error fetching geolocation:', error.message);
-      throw new Error('Invalid location');
     }
+    else {
+      console.log('Invalid location');
+    }
+
+    // console.log(lat, lon)
   };
-  console.log(lat, lon)
 
 
-  // useEffect(() => {
-  //   getGeolocation("Salt Lake City")
-  // }, [])
+
+  const getWeatherData = async (lat, lon) => {
+    //collect temp, condition, wind speed, and forecast description
+    const weatherResponse = await axios.get(`https://api.weather.gov/points/${lat},${lon}`)
+      .then((data) => {
+        const forecastUrl = data.data.properties.forecast
+        // console.log(forecastUrl)
+        axios.get(forecastUrl).then((res) => {
+          console.log(res.data.properties.periods[0])
+          const { detailedForecast, temperature, shortForecast, windSpeed } = res.data.properties.periods[0]
+          setWeatherData({
+            temperature,
+            description: shortForecast,
+            windSpeed,
+            detailedForecast
+          })
+        })
+      })
+    // console.log(weatherResponse.data.properties);
+    //temperature, description, windSpeed, detailedForecast
+  }
+  useEffect(() => {
+    // getGeolocation("Salt Lake City")
+    getWeatherData("40.7596198", "-111.886797")
+  }, [])
   return (
     <div>
       <h1>Weather App</h1>

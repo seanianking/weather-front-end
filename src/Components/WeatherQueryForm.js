@@ -5,6 +5,7 @@ const WeatherQueryForm = ({ onSearch }) => {
 
     const handleSearch = () => {
         onSearch(location);
+        setLocation('');
     };
 
     return (
