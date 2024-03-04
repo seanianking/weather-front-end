@@ -6,6 +6,12 @@ To use the application, simply go to the deployed application at [Deployed Appli
 
 ![Display Weather Information](./assets/successful-search.png)
 
+Here is a Live Demonstration of the Application:
+
+
+https://github.com/seanianking/weather-front-end/assets/56856301/411a8329-6b12-4958-9f14-8f4624b3af67
+
+
 ## Error Handling
 
 If the input information is not found by the API then an error message will be displayed instead of the box with weather information.
